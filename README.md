@@ -1,6 +1,4 @@
-# Tauri + SvelteKit + TypeScript
-
-This template should help get you started developing with Tauri, SvelteKit and TypeScript in Vite.
+# Fastest Desktop Application time-card 
 
 ## Recommended IDE Setup
 
