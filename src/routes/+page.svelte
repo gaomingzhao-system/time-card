@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { Input } from '$lib/components/ui/input/index.js'
     import { Button } from '$lib/components/ui/button/index.js'
     import { Badge } from '$lib/components/ui/badge/index.js'
     import ModeToggle from '$lib/components/ModeToggle.svelte'
@@ -11,6 +12,8 @@
     import { RotateCcw } from 'lucide-svelte'
     import Analysis from '$lib/components/analysis.svelte'
     import { Bot } from 'lucide-svelte'
+    import AlertDialog from '$lib/components/AlertDialog.svelte'
+    import ReportDialog from '$lib/components/ReportDialog.svelte'
 
     const date = new Date()
     const formattedDate = date.toLocaleDateString('ja-JP', {
@@ -57,8 +60,15 @@
     }
     const statusBadgeColor = $derived(getStatusBadgeColor())
 
+    let githubToken = $state('')
+
+    let isOpenAlertDialog = $state(false)
     const generateReport = () => {
-        alert('本日の日報を生成しました！')
+        const githubToken = localStorage.getItem('githubToken')
+        // if (!githubToken) {
+        //     isOpenAlertDialog = true
+        // }
+        isOpenAlertDialog = true
     }
 </script>
 
@@ -189,3 +199,20 @@
         </Card>
     </footer>
 </main>
+
+<AlertDialog
+    bind:isOpen={isOpenAlertDialog}
+    title="Github Tokenが設定されていません"
+    description="日報を生成するには、Github Tokenを設定する必要があります。"
+    triggerText="トリガー"
+    handleConfirm={() => {
+        localStorage.setItem('githubToken', githubToken)
+        isOpenAlertDialog = false
+    }}
+>
+    <Input
+        placeholder="Github Tokenを入力してください"
+        type="password"
+        bind:value={githubToken}
+    />
+</AlertDialog>
