@@ -10,6 +10,7 @@
     } from '$lib/components/ui/card/index.js'
     import { RotateCcw } from 'lucide-svelte'
     import Analysis from '$lib/components/analysis.svelte'
+    import { Bot } from 'lucide-svelte'
 
     const date = new Date()
     const formattedDate = date.toLocaleDateString('ja-JP', {
@@ -55,6 +56,10 @@
         }
     }
     const statusBadgeColor = $derived(getStatusBadgeColor())
+
+    const generateReport = () => {
+        alert('本日の日報を生成しました！')
+    }
 </script>
 
 <main class="p-3">
@@ -149,6 +154,13 @@
                 <Button class="grid-item">
                     <Analysis openText="分析報告" />
                 </Button>
+                <Button
+                    class="col-span-full"
+                    variant="outline"
+                    onclick={() => generateReport()}
+                >
+                    ><Bot class="size-5" />本日の日報を生成する</Button
+                >
             </CardContent>
         </Card>
     </main>
