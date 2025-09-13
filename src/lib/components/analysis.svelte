@@ -9,6 +9,8 @@
     import * as Drawer from '$lib/components/ui/drawer/index.js'
 
     const { openText } = $props()
+
+    const username = '高'
 </script>
 
 <Drawer.Root>
@@ -17,7 +19,7 @@
     </Drawer.Trigger>
     <Drawer.Content>
         <Drawer.Header>
-            <Drawer.Title>Are you sure absolutely sure?</Drawer.Title>
+            <Drawer.Title>{username}さんの分析報告</Drawer.Title>
             <Drawer.Description
                 >This action cannot be undone.</Drawer.Description
             >
