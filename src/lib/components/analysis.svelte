@@ -1,10 +1,5 @@
 <script lang="ts">
-    import {
-        Card,
-        CardContent,
-        CardHeader,
-        CardTitle,
-    } from '$lib/components/ui/card/index.js'
+    import Chart from './Chart.svelte'
     import { Button } from '$lib/components/ui/button/index.js'
     import * as Drawer from '$lib/components/ui/drawer/index.js'
 
@@ -21,12 +16,16 @@
         <Drawer.Header>
             <Drawer.Title>{username}さんの分析報告</Drawer.Title>
             <Drawer.Description
-                >This action cannot be undone.</Drawer.Description
+                >今月の勤務情報を分析して生成したチャートです。</Drawer.Description
             >
         </Drawer.Header>
+
+        <section class="p-5">
+            <Chart />
+        </section>
+
         <Drawer.Footer>
-            <Button>Submit</Button>
-            <Drawer.Close>Cancel</Drawer.Close>
+            <Drawer.Close><Button class="w-full">閉じる</Button></Drawer.Close>
         </Drawer.Footer>
     </Drawer.Content>
 </Drawer.Root>
