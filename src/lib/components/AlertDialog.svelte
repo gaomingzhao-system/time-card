@@ -1,29 +1,47 @@
 <script lang="ts">
     import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js'
     import { buttonVariants } from '$lib/components/ui/button/index.js'
+    import { Input } from '$lib/components/ui/input/index.js'
 
     interface Props {
-        triggerText: string
+        isOpen: boolean
+        triggerText?: string
         title: string
         description: string
+        handleConfirm: () => void
     }
-    const props: Props = $props()
+    const {
+        isOpen = $bindable(false),
+        triggerText,
+        title,
+        description,
+        handleConfirm,
+    } = $props()
 </script>
 
-<AlertDialog.Root>
-    <AlertDialog.Trigger class={buttonVariants({ variant: 'outline' })}>
-        {props.triggerText}
-    </AlertDialog.Trigger>
+<AlertDialog.Root open={isOpen}>
+    {#if isOpen}
+        <AlertDialog.Trigger class={buttonVariants({ variant: 'outline' })}>
+            {triggerText}
+        </AlertDialog.Trigger>
+    {/if}
     <AlertDialog.Content>
         <AlertDialog.Header>
-            <AlertDialog.Title>{props.title}</AlertDialog.Title>
+            <AlertDialog.Title>{title}</AlertDialog.Title>
             <AlertDialog.Description>
-                {props.description}
+                {description}
             </AlertDialog.Description>
+
+            <section class="my-4">
+                <slot></slot>
+            </section>
         </AlertDialog.Header>
+
         <AlertDialog.Footer>
             <AlertDialog.Cancel>キャンセル</AlertDialog.Cancel>
-            <AlertDialog.Action>オッケ</AlertDialog.Action>
+            <AlertDialog.Action onClick={handleConfirm}
+                >オッケ</AlertDialog.Action
+            >
         </AlertDialog.Footer>
     </AlertDialog.Content>
 </AlertDialog.Root>
