@@ -1,4 +1,4 @@
-# Fastest Desktop Application time-card 
+# Fastest Desktop Application time-card
 
 ## Recommended IDE Setup
 
