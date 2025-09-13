@@ -1,5 +1,6 @@
 <script lang="ts">
     import { Button } from '$lib/components/ui/button/index.js'
+    import { Badge } from '$lib/components/ui/badge/index.js'
     import ModeToggle from '$lib/components/ModeToggle.svelte'
     import {
         Card,
@@ -35,16 +36,38 @@
         { name: '鈴木花子', status: '退勤済み', start: '09:00:00' },
         { name: '佐藤次郎', status: '休憩中', start: '12:00:00' },
     ]
+
+    const username = '山田太郎'
+
+    const getStatusBadgeColor = () => {
+        switch (status as Status) {
+            case '出勤中':
+                return 'bg-green-500'
+            case '退勤済み':
+                return 'bg-gray-500'
+            case '休憩中':
+                return 'bg-yellow-500'
+            case '未出勤':
+                return 'bg-red-500'
+            default:
+                return 'bg-gray-500'
+        }
+    }
+    const statusBadgeColor = $derived(getStatusBadgeColor())
 </script>
 
 <header>
-    <Card>
-        <CardContent
-            >{date.getHours() < 12
-                ? 'おはよう'
-                : 'こんにちは'}今日は：{formattedDate}</CardContent
-        >
-        <CardContent>今の状態は：{status}</CardContent>
+    <Card class="mb-4 flex flex-row items-center justify-between">
+        <section>
+            <CardContent
+                >{date.getHours() < 12
+                    ? `おはよう！${username}さん`
+                    : `こんにちは！${username}さん`}</CardContent
+            >
+            <CardContent>{formattedDate} {time}</CardContent>
+        </section>
+
+        <Badge variant="secondary" class={statusBadgeColor}>{status}</Badge>
     </Card>
 </header>
 
