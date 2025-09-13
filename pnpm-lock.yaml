@@ -20,6 +20,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      lucide-svelte:
+        specifier: ^0.544.0
+        version: 0.544.0(svelte@5.38.10)
       mode-watcher:
         specifier: ^1.1.0
         version: 1.1.0(svelte@5.38.10)
@@ -739,6 +742,11 @@ packages:
 
   locate-character@3.0.0:
     resolution: {integrity: sha512-SW13ws7BjaeJ6p7Q6CO2nchbYEc3X3J6WrmTTDto7yMPqVSZTUyY5Tjbid+Ab8gLnATtygYtiDIJGQRRn2ZOiA==}
+
+  lucide-svelte@0.544.0:
+    resolution: {integrity: sha512-8kBxSivf8SJdEUJRHBpu9bRw0S/qfVK+Yfb92KQnRRBdP425RzT6aQfrIfZctG1oucPVTBQe1ZXgmth/3qVICg==}
+    peerDependencies:
+      svelte: ^3 || ^4 || ^5.0.0-next.42
 
   magic-string@0.30.19:
     resolution: {integrity: sha512-2N21sPY9Ws53PZvsEpVtNuSW+ScYbQdp4b9qUaL+9QkHUrGFKo56Lg9Emg5s9V/qrtNBmiR01sYhUOwu3H+VOw==}
@@ -1491,6 +1499,10 @@ snapshots:
       lightningcss-win32-x64-msvc: 1.30.1
 
   locate-character@3.0.0: {}
+
+  lucide-svelte@0.544.0(svelte@5.38.10):
+    dependencies:
+      svelte: 5.38.10
 
   magic-string@0.30.19:
     dependencies:
