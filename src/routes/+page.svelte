@@ -37,7 +37,7 @@
         { name: '佐藤次郎', status: '休憩中', start: '12:00:00' },
     ]
 
-    const username = '山田太郎'
+    const username = '高'
 
     const getStatusBadgeColor = () => {
         switch (status as Status) {
@@ -56,108 +56,110 @@
     const statusBadgeColor = $derived(getStatusBadgeColor())
 </script>
 
-<header>
-    <Card class="mb-4 flex flex-row items-center justify-between">
-        <section>
-            <CardContent
-                >{date.getHours() < 12
-                    ? `おはよう！${username}さん`
-                    : `こんにちは！${username}さん`}</CardContent
-            >
-            <CardContent>{formattedDate} {time}</CardContent>
+<main class="p-3">
+    <header>
+        <Card
+            class="flex flex-row items-center justify-between bg-gray-800 p-5 text-white dark:bg-gray-600"
+        >
+            <section>
+                <CardContent class="px-0"
+                    >{date.getHours() < 12
+                        ? `おはよう！${username}さん`
+                        : `こんにちは！${username}さん`}</CardContent
+                >
+                <CardContent class="px-0">今日は：{formattedDate}</CardContent>
+            </section>
+
+            <Badge variant="secondary" class={statusBadgeColor}>{status}</Badge>
+        </Card>
+    </header>
+
+    <main>
+        <!-- the section of info card -->
+        <!-- started working card -->
+        <section
+            class="my-3 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4"
+        >
+            <Card>
+                <CardHeader>
+                    <CardTitle>出勤時間</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p class="text-xs">2025-09-13</p>
+                    <p class="text-xl">08:11:11</p>
+                </CardContent>
+            </Card>
+
+            <!-- ended working card -->
+            <Card>
+                <CardHeader>
+                    <CardTitle>退勤時間</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p class="text-xs">2025-09-13</p>
+                    <p class="text-xl">17:11:11</p>
+                </CardContent>
+            </Card>
+
+            <!-- breaking card -->
+            <Card>
+                <CardHeader>
+                    <CardTitle>休憩時間</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p class="text-xl">01:00:00</p>
+                </CardContent>
+            </Card>
+
+            <!-- total working hours card -->
+            <Card>
+                <CardHeader>
+                    <CardTitle>合計勤務時間</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <p class="text-xl">08:00:00</p>
+                </CardContent>
+            </Card>
         </section>
 
-        <Badge variant="secondary" class={statusBadgeColor}>{status}</Badge>
-    </Card>
-</header>
+        <!-- the section of action card -->
+        <Card>
+            <CardHeader class="flex items-center justify-between">
+                <CardTitle class="flex items-center gap-2"
+                    >オプレーション</CardTitle
+                >
 
-<main>
-    <!-- the section of info card -->
-    <!-- started working card -->
-    <Card>
-        <CardHeader>
-            <CardTitle class="flex items-center gap-2 text-2xl">
-                出勤時間
-            </CardTitle>
-        </CardHeader>
-        <CardContent class="flex items-center justify-between">
-            <p>2025/09/13</p>
-            <p>08:11:11</p>
-        </CardContent>
-    </Card>
-
-    <!-- ended working card -->
-    <Card>
-        <CardHeader>
-            <CardTitle class="flex items-center gap-2 text-2xl">
-                退勤時間
-            </CardTitle>
-        </CardHeader>
-        <CardContent class="flex items-center justify-between">
-            <p>2025/09/13</p>
-            <p>17:11:11</p>
-        </CardContent>
-    </Card>
-
-    <!-- breaking card -->
-    <Card>
-        <CardHeader>
-            <CardTitle class="flex items-center gap-2 text-2xl">
-                休憩時間
-            </CardTitle>
-        </CardHeader>
-        <CardContent class="flex items-center justify-between">
-            <p>2025/09/13</p>
-            <p>12:00:00</p>
-        </CardContent>
-    </Card>
-
-    <!-- total working hours card -->
-    <Card>
-        <CardHeader>
-            <CardTitle class="flex items-center gap-2 text-2xl">
-                本日合計勤務
-            </CardTitle>
-        </CardHeader>
-        <CardContent class="flex items-center justify-between">
-            <p>2025/09/13</p>
-            <p>08:11:11 - 17:11:11</p>
-        </CardContent>
-    </Card>
-
-    <!-- the section of action card -->
-    <Card>
-        <CardHeader>
-            <CardTitle class="flex items-center gap-2 text-2xl">操作</CardTitle>
-
-            <section>
-                <Button variant="outline" size="icon">
-                    <RotateCcw class="[1.2rem] w-[1.2rem] !transition-all" />
-                </Button>
-                <ModeToggle />
-            </section>
-        </CardHeader>
-        <CardContent class="flex items-center justify-between">
-            <Button class="w-1/2">出勤</Button>
-            <Button class="w-1/2">退勤</Button>
-            <Button class="w-1/2">休憩開始</Button>
-            <Button class="w-1/2">分析報告</Button>
-        </CardContent>
-    </Card>
-</main>
-
-<footer>
-    <Card>
-        <CardTitle>出勤メンバー</CardTitle>
-
-        {#each members as member}
-            <CardContent>
-                <header>
-                    <h5>{member.name}</h5>
-                    <p>開始時間: {member.start}</p>
-                </header>
-                <p>状態: {member.status}</p>
+                <section class="flex items-center gap-2">
+                    <Button variant="outline" size="icon">
+                        <RotateCcw
+                            class="size-4 transition-transform hover:rotate-180"
+                        />
+                    </Button>
+                    <ModeToggle />
+                </section>
+            </CardHeader>
+            <CardContent class="grid grid-cols-2 gap-2">
+                <Button class="grid-item">出勤</Button>
+                <Button class="grid-item">退勤</Button>
+                <Button class="grid-item">休憩開始</Button>
+                <Button class="grid-item">分析報告</Button>
             </CardContent>
-        {/each}
-    </Card>
-</footer>
+        </Card>
+    </main>
+
+    <footer class="mt-3">
+        <Card>
+            <CardTitle>出勤メンバー</CardTitle>
+
+            {#each members as member}
+                <CardContent>
+                    <header>
+                        <h5>{member.name}</h5>
+                        <p>開始時間: {member.start}</p>
+                    </header>
+                    <p>状態: {member.status}</p>
+                </CardContent>
+            {/each}
+        </Card>
+    </footer>
+</main>
