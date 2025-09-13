@@ -8,9 +8,45 @@
         CardTitle,
     } from '$lib/components/ui/card/index.js'
     import { RotateCcw } from 'lucide-svelte'
+
+    const date = new Date()
+    const formattedDate = date.toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        weekday: 'short',
+    })
+    const time = date.toLocaleTimeString('ja-JP', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+    })
+
+    type Status = '出勤中' | '退勤済み' | '休憩中' | '未出勤'
+    const status: Status = $state('出勤中')
+
+    interface Member {
+        name: string
+        status: Status
+        start: string
+    }
+    const members: Member[] = [
+        { name: '山田太郎', status: '出勤中', start: '08:11:11' },
+        { name: '鈴木花子', status: '退勤済み', start: '09:00:00' },
+        { name: '佐藤次郎', status: '休憩中', start: '12:00:00' },
+    ]
 </script>
 
-<header></header>
+<header>
+    <Card>
+        <CardContent
+            >{date.getHours() < 12
+                ? 'おはよう'
+                : 'こんにちは'}今日は：{formattedDate}</CardContent
+        >
+        <CardContent>今の状態は：{status}</CardContent>
+    </Card>
+</header>
 
 <main>
     <!-- the section of info card -->
@@ -57,7 +93,7 @@
     <Card>
         <CardHeader>
             <CardTitle class="flex items-center gap-2 text-2xl">
-                本日労働時間
+                本日合計勤務
             </CardTitle>
         </CardHeader>
         <CardContent class="flex items-center justify-between">
@@ -73,7 +109,7 @@
 
             <section>
                 <Button variant="outline" size="icon">
-                    <RotateCcw h-[1.2rem] w-[1.2rem] !transition-all />
+                    <RotateCcw class="[1.2rem] w-[1.2rem] !transition-all" />
                 </Button>
                 <ModeToggle />
             </section>
@@ -87,4 +123,18 @@
     </Card>
 </main>
 
-<footer></footer>
+<footer>
+    <Card>
+        <CardTitle>出勤メンバー</CardTitle>
+
+        {#each members as member}
+            <CardContent>
+                <header>
+                    <h5>{member.name}</h5>
+                    <p>開始時間: {member.start}</p>
+                </header>
+                <p>状態: {member.status}</p>
+            </CardContent>
+        {/each}
+    </Card>
+</footer>
