@@ -72,7 +72,7 @@
     }
 </script>
 
-<main class="p-3">
+<main class="p-3 md:px-96">
     <header>
         <Card
             class="flex flex-row items-center justify-between bg-gray-800 p-5 text-white dark:bg-gray-600"
