@@ -1,4 +1,5 @@
 <script lang="ts">
+    import * as Drawer from '$lib/components/ui/drawer/index.js'
     import { Button } from '$lib/components/ui/button/index.js'
     import { Badge } from '$lib/components/ui/badge/index.js'
     import ModeToggle from '$lib/components/ModeToggle.svelte'
@@ -125,12 +126,14 @@
         <!-- the section of action card -->
         <Card>
             <CardHeader class="flex items-center justify-between">
-                <CardTitle class="flex items-center gap-2"
-                    >オプレーション</CardTitle
-                >
+                <CardTitle>オプレーション</CardTitle>
 
                 <section class="flex items-center gap-2">
-                    <Button variant="outline" size="icon">
+                    <Button
+                        variant="outline"
+                        size="icon"
+                        onclick={() => location.reload()}
+                    >
                         <RotateCcw
                             class="size-4 transition-transform hover:rotate-180"
                         />
@@ -149,17 +152,25 @@
 
     <footer class="mt-3">
         <Card>
-            <CardTitle>出勤メンバー</CardTitle>
+            <CardHeader class="flex items-center justify-between">
+                <CardTitle>出勤メンバー</CardTitle>
+            </CardHeader>
 
-            {#each members as member}
-                <CardContent>
-                    <header>
-                        <h5>{member.name}</h5>
-                        <p>開始時間: {member.start}</p>
-                    </header>
-                    <p>状態: {member.status}</p>
-                </CardContent>
-            {/each}
+            <section class="flex flex-col items-start justify-center gap-3 p-5">
+                {#each members as member}
+                    <CardContent
+                        class="flex w-full items-center justify-between rounded-xl bg-gray-100 py-3 dark:bg-gray-800"
+                    >
+                        <header>
+                            <h5>{member.name}</h5>
+                            <p class="text-sm">開始時間: {member.start}</p>
+                        </header>
+                        <Badge variant="secondary" class={statusBadgeColor}
+                            >{member.status}</Badge
+                        >
+                    </CardContent>
+                {/each}
+            </section>
         </Card>
     </footer>
 </main>
