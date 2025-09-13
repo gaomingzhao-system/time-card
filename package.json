@@ -13,6 +13,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@formkit/auto-animate": "^0.9.0",
     "@tailwindcss/vite": "^4.1.13",
     "@tauri-apps/api": "^2.8.0",
     "@tauri-apps/plugin-opener": "^2.5.0",
