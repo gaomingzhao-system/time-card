@@ -8,11 +8,13 @@
     import { Button } from '$lib/components/ui/button/index.js'
     import * as Drawer from '$lib/components/ui/drawer/index.js'
 
-    const { openText } = $props('')
+    const { openText } = $props()
 </script>
 
 <Drawer.Root>
-    <Drawer.Trigger>{openText}</Drawer.Trigger>
+    <Drawer.Trigger>
+        {openText}
+    </Drawer.Trigger>
     <Drawer.Content>
         <Drawer.Header>
             <Drawer.Title>Are you sure absolutely sure?</Drawer.Title>

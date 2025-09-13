@@ -1,5 +1,4 @@
 <script lang="ts">
-    import * as Drawer from '$lib/components/ui/drawer/index.js'
     import { Button } from '$lib/components/ui/button/index.js'
     import { Badge } from '$lib/components/ui/badge/index.js'
     import ModeToggle from '$lib/components/ModeToggle.svelte'
@@ -10,6 +9,7 @@
         CardTitle,
     } from '$lib/components/ui/card/index.js'
     import { RotateCcw } from 'lucide-svelte'
+    import Analysis from '$lib/components/analysis.svelte'
 
     const date = new Date()
     const formattedDate = date.toLocaleDateString('ja-JP', {
@@ -145,7 +145,10 @@
                 <Button class="grid-item">出勤</Button>
                 <Button class="grid-item">退勤</Button>
                 <Button class="grid-item">休憩開始</Button>
-                <Button class="grid-item">分析報告</Button>
+
+                <Button class="grid-item">
+                    <Analysis openText="分析報告" />
+                </Button>
             </CardContent>
         </Card>
     </main>
