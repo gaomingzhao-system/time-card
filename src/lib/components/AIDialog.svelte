@@ -30,6 +30,7 @@
         toast.success('内容をコピーしました')
         isCopied = true
     }
+    // equivalent to vue `watch` and `watchEffect` OR react `useEffect`
     $effect(() => {
         if (isCopied) {
             const timeout = setTimeout(() => {
@@ -49,7 +50,7 @@
             </Dialog.Description>
         </Dialog.Header>
 
-        <Card class="relative w-full">
+        <Card class="relative min-h-32 w-full">
             <Button
                 variant="ghost"
                 size="icon"
@@ -63,13 +64,17 @@
                 {/if}
             </Button>
 
-            <TextGenerateEffect words={todayReport} className="w-full" />
+            <TextGenerateEffect
+                words={todayReport}
+                className="w-full break-words text-start"
+            />
         </Card>
 
         <Dialog.Footer>
             <Button variant="default" onclick={generateReport}>生成する</Button>
             <Dialog.Close onclick={() => (isOpen = false)}
-                ><Button variant="secondary">キャンセル</Button></Dialog.Close
+                ><Button variant="secondary" class="w-full">キャンセル</Button
+                ></Dialog.Close
             >
         </Dialog.Footer>
     </Dialog.Content>
