@@ -1,40 +1,37 @@
 <script lang="ts">
     import * as Card from '$lib/components/ui/card/index.js'
     import * as Dialog from '$lib/components/ui/dialog/index.js'
-    import * as Carousel from '$lib/components/ui/carousel/index.js'
+    import { Button } from './ui/button'
+    import { generateDailyReport } from '$lib/hooks/generateDailyReport'
+
+    let { isOpen = $bindable(false) } = $props()
+
+    const generateReport = async () => {
+        const githubToken = localStorage.getItem('githubToken')
+        if (!githubToken) {
+            console.error('githubToken not found in localStorage')
+            return
+        }
+        const report = await generateDailyReport(githubToken)
+
+        console.log(report)
+    }
 </script>
 
-<Dialog.Root>
-    <Dialog.Trigger>本日の日報を生成する</Dialog.Trigger>
+<Dialog.Root open={isOpen}>
     <Dialog.Content>
         <Dialog.Header>
             <Dialog.Title>日報を生成する</Dialog.Title>
             <Dialog.Description>
-                Github
-                APIを使って、本日完了されたイシューを基に日報を生成します。
+                本日完了されたイシューを基に日報を生成する
             </Dialog.Description>
         </Dialog.Header>
 
-        <Carousel.Root class="w-full max-w-xs">
-            <Carousel.Content>
-                {#each Array(5), i}
-                    <Carousel.Item>
-                        <div class="p-1">
-                            <Card.Root>
-                                <Card.Content
-                                    class="flex aspect-square items-center justify-center p-6"
-                                >
-                                    <span class="text-4xl font-semibold"
-                                        >{i + 1}</span
-                                    >
-                                </Card.Content>
-                            </Card.Root>
-                        </div>
-                    </Carousel.Item>
-                {/each}
-            </Carousel.Content>
-            <Carousel.Previous />
-            <Carousel.Next />
-        </Carousel.Root>
+        <Dialog.Footer>
+            <Button variant="default" onclick={generateReport}>生成する</Button>
+            <Dialog.Close onclick={() => (isOpen = false)}
+                ><Button variant="secondary">キャンセル</Button></Dialog.Close
+            >
+        </Dialog.Footer>
     </Dialog.Content>
 </Dialog.Root>
