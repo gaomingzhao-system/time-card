@@ -13,7 +13,9 @@
     import Analysis from '$lib/components/analysis.svelte'
     import { Bot } from 'lucide-svelte'
     import AlertDialog from '$lib/components/AlertDialog.svelte'
-    import ReportDialog from '$lib/components/ReportDialog.svelte'
+    import AIDialog from '$lib/components/AIDialog.svelte'
+    import * as Alert from '$lib/components/ui/alert/index.js'
+    import presentationImg from '$lib/assets/presentation.png'
 
     const date = new Date()
     const formattedDate = date.toLocaleDateString('ja-JP', {
@@ -63,13 +65,16 @@
     let githubToken = $state('')
 
     let isOpenAlertDialog = $state(false)
-    const generateReport = () => {
+    let isOpenAIDialog = $state(false)
+    const openDialog = () => {
         const githubToken = localStorage.getItem('githubToken')
-        // if (!githubToken) {
-        //     isOpenAlertDialog = true
-        // }
-        isOpenAlertDialog = true
+
+        if (!githubToken) isOpenAlertDialog = true
+        else isOpenAIDialog = true
     }
+    setInterval(() => {
+        console.log(isOpenAIDialog)
+    }, 1000)
 </script>
 
 <main class="p-3 md:px-96">
@@ -167,9 +172,9 @@
                 <Button
                     class="col-span-full"
                     variant="outline"
-                    onclick={() => generateReport()}
+                    onclick={() => openDialog()}
                 >
-                    ><Bot class="size-5" />本日の日報を生成する</Button
+                    <Bot class="size-5" />本日の日報を生成する</Button
                 >
             </CardContent>
         </Card>
@@ -200,16 +205,63 @@
     </footer>
 </main>
 
+<AIDialog bind:isOpen={isOpenAIDialog} />
+
 <AlertDialog
     bind:isOpen={isOpenAlertDialog}
-    title="Github Tokenが設定されていません"
-    description="日報を生成するには、Github Tokenを設定する必要があります。"
-    triggerText="トリガー"
+    title="Github Tokenを設定してください"
+    description="Tokenを設定しないとデータ貰えないです"
     handleConfirm={() => {
         localStorage.setItem('githubToken', githubToken)
         isOpenAlertDialog = false
     }}
 >
+    <!-- get github token steps for suggesting to user -->
+    <Alert.Root class="mb-5">
+        <Alert.Title>Tokenの獲得方法</Alert.Title>
+        <Alert.Description>
+            <ul class=" list-inside list-disc text-left text-sm">
+                <li>
+                    <a href="https://github.com/settings/profile"
+                        >Github Settings</a
+                    >に移動
+                </li>
+                <li>
+                    左側の <a
+                        href="https://github.com/settings/personal-access-tokens"
+                        class="text-blue-600 underline">Developer Settings</a
+                    >
+                    をクリック、Personal Access Tokensで<strong
+                        >Fine-grained tokens</strong
+                    >を選択
+                </li>
+                <li>右上の<code>Generate new token</code>をクリック</li>
+                <li>
+                    Token nameを入力、Expirationは必要に応じて設定、ただし<code
+                        >No expiration</code
+                    >は不推薦
+                </li>
+                <li>
+                    <code>Repository access欄</code>で
+                    <strong>All Repositories</strong>を選択
+                </li>
+                <li>
+                    <code>Permissions</code>欄で
+                    <code>Add Permissions</code>をクリックして<strong
+                        >Issues</strong
+                    >を選択、以下の画像のように設定
+
+                    <img
+                        src={presentationImg}
+                        alt="展示画像"
+                        class="my-2 rounded-lg"
+                    />
+                </li>
+                <li>最後に<code>Generate Token</code>をクリックして完成</li>
+            </ul>
+        </Alert.Description>
+    </Alert.Root>
+
     <Input
         placeholder="Github Tokenを入力してください"
         type="password"
