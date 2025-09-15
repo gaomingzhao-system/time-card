@@ -5,7 +5,6 @@
 
     interface Props {
         isOpen: boolean
-        triggerText?: string
         title: string
         description: string
         children?: Snippet
@@ -13,20 +12,14 @@
     }
     const {
         isOpen = $bindable(false),
-        triggerText,
         title,
         description,
         children,
         handleConfirm,
-    } = $props()
+    }: Props = $props()
 </script>
 
 <AlertDialog.Root open={isOpen}>
-    {#if isOpen}
-        <AlertDialog.Trigger class={buttonVariants({ variant: 'outline' })}>
-            {triggerText}
-        </AlertDialog.Trigger>
-    {/if}
     <AlertDialog.Content>
         <AlertDialog.Header>
             <AlertDialog.Title>{title}</AlertDialog.Title>
@@ -35,7 +28,9 @@
             </AlertDialog.Description>
 
             <section class="my-4">
-                {@render children()}
+                {#if children}
+                    {@render children()}
+                {/if}
             </section>
         </AlertDialog.Header>
 
