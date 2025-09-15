@@ -1,13 +1,14 @@
 <script lang="ts">
     import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js'
     import { buttonVariants } from '$lib/components/ui/button/index.js'
-    import { Input } from '$lib/components/ui/input/index.js'
+    import { type Snippet } from 'svelte'
 
     interface Props {
         isOpen: boolean
         triggerText?: string
         title: string
         description: string
+        children?: Snippet
         handleConfirm: () => void
     }
     const {
@@ -15,6 +16,7 @@
         triggerText,
         title,
         description,
+        children,
         handleConfirm,
     } = $props()
 </script>
@@ -33,13 +35,13 @@
             </AlertDialog.Description>
 
             <section class="my-4">
-                <slot></slot>
+                {@render children()}
             </section>
         </AlertDialog.Header>
 
         <AlertDialog.Footer>
             <AlertDialog.Cancel>キャンセル</AlertDialog.Cancel>
-            <AlertDialog.Action onClick={handleConfirm}
+            <AlertDialog.Action onclick={handleConfirm}
                 >オッケ</AlertDialog.Action
             >
         </AlertDialog.Footer>
