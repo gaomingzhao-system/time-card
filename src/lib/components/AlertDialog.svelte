@@ -10,7 +10,7 @@
         children?: Snippet
         handleConfirm: () => void
     }
-    const {
+    let {
         isOpen = $bindable(false),
         title,
         description,
@@ -35,7 +35,9 @@
         </AlertDialog.Header>
 
         <AlertDialog.Footer>
-            <AlertDialog.Cancel>キャンセル</AlertDialog.Cancel>
+            <AlertDialog.Cancel onclick={() => (isOpen = false)}
+                >キャンセル</AlertDialog.Cancel
+            >
             <AlertDialog.Action onclick={handleConfirm}
                 >オッケ</AlertDialog.Action
             >
