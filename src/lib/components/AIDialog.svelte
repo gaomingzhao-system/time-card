@@ -1,6 +1,7 @@
 <script lang="ts">
     import {
         Card,
+        CardHeader,
         CardTitle,
         CardContent,
     } from '$lib/components/ui/card/index.js'
@@ -10,10 +11,12 @@
     import { generateDailyReport } from '$lib/hooks/generateDailyReport'
     import { toast } from 'svelte-sonner'
     import { CopyIcon, CheckIcon } from 'lucide-svelte'
+    import TemplatesCarousel from '$lib/components/TemplatesCarousel.svelte'
 
     let { isOpen = $bindable(false) } = $props()
 
     let todayReport = $state('')
+    let selectedTemplate = $state('')
     const generateReport = async () => {
         // const githubToken = localStorage.getItem('githubToken')
         // if (!githubToken) {
@@ -49,6 +52,12 @@
                 本日完了されたイシューを基に日報を生成する
             </Dialog.Description>
         </Dialog.Header>
+
+        <h2 class="text-center font-semibold">日報テンプレートを選択する</h2>
+        <TemplatesCarousel
+            handleClickTemplate={(id, template) =>
+                (selectedTemplate = template)}
+        />
 
         <Card class="relative min-h-32 w-full">
             <Button
