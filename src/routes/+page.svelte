@@ -13,7 +13,7 @@
     import Analysis from '$lib/components/analysis.svelte'
     import { Bot } from 'lucide-svelte'
     import AlertDialog from '$lib/components/AlertDialog.svelte'
-    import ReportDialog from '$lib/components/ReportDialog.svelte'
+    import AIDialog from '$lib/components/AIDialog.svelte'
 
     const date = new Date()
     const formattedDate = date.toLocaleDateString('ja-JP', {
@@ -63,12 +63,12 @@
     let githubToken = $state('')
 
     let isOpenAlertDialog = $state(false)
-    const generateReport = () => {
+    let isOpenAIDialog = $state(false)
+    const openDialog = () => {
         const githubToken = localStorage.getItem('githubToken')
-        // if (!githubToken) {
-        //     isOpenAlertDialog = true
-        // }
-        isOpenAlertDialog = true
+
+        if (!githubToken) isOpenAlertDialog = true
+        else isOpenAIDialog = true
     }
 </script>
 
@@ -167,7 +167,7 @@
                 <Button
                     class="col-span-full"
                     variant="outline"
-                    onclick={() => generateReport()}
+                    onclick={() => openDialog()}
                 >
                     ><Bot class="size-5" />本日の日報を生成する</Button
                 >
@@ -200,11 +200,12 @@
     </footer>
 </main>
 
+<AIDialog />
+
 <AlertDialog
     bind:isOpen={isOpenAlertDialog}
-    title="Github Tokenが設定されていません"
-    description="日報を生成するには、Github Tokenを設定する必要があります。"
-    triggerText="トリガー"
+    title="Github Tokenを設定してください"
+    description="Tokenを設定しないとデータ貰えないです"
     handleConfirm={() => {
         localStorage.setItem('githubToken', githubToken)
         isOpenAlertDialog = false
