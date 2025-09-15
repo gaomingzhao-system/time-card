@@ -16,6 +16,7 @@
     let { isOpen = $bindable(false) } = $props()
 
     let todayReport = $state('')
+    let selectedId = $state(0)
     let selectedTemplate = $state('')
     const generateReport = async () => {
         // const githubToken = localStorage.getItem('githubToken')
@@ -42,6 +43,10 @@
             return () => clearTimeout(timeout)
         }
     })
+
+    setInterval(() => {
+        console.log(selectedTemplate)
+    }, 1000)
 </script>
 
 <Dialog.Root open={isOpen}>
@@ -54,10 +59,7 @@
         </Dialog.Header>
 
         <h2 class="text-center font-semibold">日報テンプレートを選択する</h2>
-        <TemplatesCarousel
-            handleClickTemplate={(id, template) =>
-                (selectedTemplate = template)}
-        />
+        <TemplatesCarousel bind:selectedId bind:selectedTemplate />
 
         <Card class="relative min-h-32 w-full">
             <Button
