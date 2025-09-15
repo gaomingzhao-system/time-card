@@ -1,11 +1,15 @@
 <script lang="ts">
-    import * as Card from '$lib/components/ui/card/index.js'
+    import { Card, CardContent } from '$lib/components/ui/card/index.js'
     import * as Dialog from '$lib/components/ui/dialog/index.js'
     import { Button } from './ui/button'
+    import { TextGenerateEffect } from '$lib/components/ui/TextGenerateEffect/index'
     import { generateDailyReport } from '$lib/hooks/generateDailyReport'
 
     let { isOpen = $bindable(false) } = $props()
 
+    let todayReport = $state(
+        'aag aga ga gdag ag da gagad ga gag agad gd ddddddddddddddddddd',
+    )
     const generateReport = async () => {
         const githubToken = localStorage.getItem('githubToken')
         if (!githubToken) {
@@ -13,8 +17,7 @@
             return
         }
         const report = await generateDailyReport(githubToken)
-
-        console.log(report)
+        todayReport = report
     }
 </script>
 
@@ -26,6 +29,12 @@
                 本日完了されたイシューを基に日報を生成する
             </Dialog.Description>
         </Dialog.Header>
+
+        <Card>
+            <CardContent>
+                <TextGenerateEffect words={todayReport} />
+            </CardContent>
+        </Card>
 
         <Dialog.Footer>
             <Button variant="default" onclick={generateReport}>生成する</Button>
