@@ -1,24 +1,43 @@
 <script lang="ts">
-    import { Card, CardContent } from '$lib/components/ui/card/index.js'
+    import {
+        Card,
+        CardTitle,
+        CardContent,
+    } from '$lib/components/ui/card/index.js'
     import * as Dialog from '$lib/components/ui/dialog/index.js'
     import { Button } from './ui/button'
     import { TextGenerateEffect } from '$lib/components/ui/TextGenerateEffect/index'
     import { generateDailyReport } from '$lib/hooks/generateDailyReport'
+    import { toast } from 'svelte-sonner'
+    import { CopyIcon, CheckIcon } from 'lucide-svelte'
 
     let { isOpen = $bindable(false) } = $props()
 
-    let todayReport = $state(
-        'aag aga ga gdag ag da gagad ga gag agad gd ddddddddddddddddddd',
-    )
+    let todayReport = $state('')
     const generateReport = async () => {
-        const githubToken = localStorage.getItem('githubToken')
-        if (!githubToken) {
-            console.error('githubToken not found in localStorage')
-            return
-        }
-        const report = await generateDailyReport(githubToken)
-        todayReport = report
+        // const githubToken = localStorage.getItem('githubToken')
+        // if (!githubToken) {
+        //     console.error('githubToken not found in localStorage')
+        //     return
+        // }
+        // const report = await generateDailyReport(githubToken)
+        // todayReport = report
     }
+
+    let isCopied = $state(false)
+    const handleCopy = () => {
+        navigator.clipboard.writeText(todayReport)
+        toast.success('内容をコピーしました')
+        isCopied = true
+    }
+    $effect(() => {
+        if (isCopied) {
+            const timeout = setTimeout(() => {
+                isCopied = false
+            }, 2000)
+            return () => clearTimeout(timeout)
+        }
+    })
 </script>
 
 <Dialog.Root open={isOpen}>
@@ -30,10 +49,21 @@
             </Dialog.Description>
         </Dialog.Header>
 
-        <Card>
-            <CardContent>
-                <TextGenerateEffect words={todayReport} />
-            </CardContent>
+        <Card class="relative w-full">
+            <Button
+                variant="ghost"
+                size="icon"
+                onclick={handleCopy}
+                class="absolute top-1 right-1"
+            >
+                {#if !isCopied}
+                    <CopyIcon class="size-5" />
+                {:else}
+                    <CheckIcon class="size-5" />
+                {/if}
+            </Button>
+
+            <TextGenerateEffect words={todayReport} className="w-full" />
         </Card>
 
         <Dialog.Footer>
