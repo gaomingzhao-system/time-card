@@ -23,6 +23,7 @@
         "lucide-svelte": "^0.544.0",
         "mode-watcher": "^1.1.0",
         "octokit": "^5.0.3",
+        "svelte-motion": "^0.12.2",
         "tailwind-merge": "^3.3.1",
         "tailwindcss": "^4.1.13"
     },
