@@ -72,9 +72,6 @@
         if (!githubToken) isOpenAlertDialog = true
         else isOpenAIDialog = true
     }
-    setInterval(() => {
-        console.log(isOpenAIDialog)
-    }, 1000)
 </script>
 
 <main class="p-3 md:px-96">
