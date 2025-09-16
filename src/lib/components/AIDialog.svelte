@@ -47,7 +47,7 @@
 </script>
 
 <Dialog.Root open={isOpen}>
-    <Dialog.Content class="w-full">
+    <Dialog.Content>
         <Dialog.Header>
             <Dialog.Title>日報を生成する</Dialog.Title>
             <Dialog.Description>
