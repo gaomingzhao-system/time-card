@@ -169,7 +169,7 @@
                 <Button
                     class="col-span-full"
                     variant="outline"
-                    onclick={() => openDialog()}
+                    onclick={openDialog}
                 >
                     <Bot class="size-5" />本日の日報を生成する</Button
                 >
