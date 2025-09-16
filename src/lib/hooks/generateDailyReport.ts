@@ -2,7 +2,7 @@ import { getTodayFinishedIssues } from './getTodayIssues'
 import { GoogleGenAI } from '@google/genai'
 
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
-const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY })
+const ai = new GoogleGenAI({ apiKey: import.meta.env.GEMINI_API_KEY })
 
 const unifiedPrompt =
     '```commandこのアカウントの今日のissueやpull requestの歴史を使って、今日しましたタスクをリストに書いてください、リンクとissue番号は不要です、特にissueに対応されたタスクのタイトルを書いてください。そして今日の感想も下に書いてください、フォーマットは下の内容にようにしてください：```\n'
