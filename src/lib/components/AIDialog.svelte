@@ -27,10 +27,6 @@
             selectedTemplate,
         )
         todayReport = report ?? ''
-        isDisabledGenerateButton = true
-        setTimeout(() => {
-            isDisabledGenerateButton = false
-        }, 3000)
     }
 
     let isCopied = $state(false)
@@ -51,7 +47,7 @@
 </script>
 
 <Dialog.Root open={isOpen}>
-    <Dialog.Content class="max-w-full">
+    <Dialog.Content class="w-full">
         <Dialog.Header>
             <Dialog.Title>日報を生成する</Dialog.Title>
             <Dialog.Description>
@@ -62,24 +58,19 @@
         <h2 class="text-center font-semibold">日報テンプレートを選択する</h2>
         <TemplatesCarousel bind:selectedId bind:selectedTemplate />
 
-        {#if todayReport}
+        {#if !isDisabledGenerateButton}
             <Card class="relative max-h-64 min-h-32 w-full overflow-y-scroll">
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onclick={handleCopy}
-                    class="absolute top-1 right-1"
-                >
+                <Button variant="ghost" size="icon" onclick={handleCopy}>
                     {#if !isCopied}
-                        <CopyIcon class="size-5" />
+                        <CopyIcon class="absolute top-3 right-3 size-5" />
                     {:else}
-                        <CheckIcon class="size-5" />
+                        <CheckIcon class="absolute top-3 right-3 size-5" />
                     {/if}
                 </Button>
 
                 <TextGenerateEffect
                     words={todayReport}
-                    className="w-full break-words text-start"
+                    className="w-full break-words text-start text-sm text-gray-800"
                 />
             </Card>
         {:else}
@@ -93,7 +84,17 @@
         {/if}
 
         <Dialog.Footer>
-            <Button variant="default" onclick={generateReport}>生成する</Button>
+            <Button
+                variant="default"
+                disabled={isDisabledGenerateButton}
+                onclick={() => {
+                    generateReport()
+                    isDisabledGenerateButton = true
+                    setTimeout(() => {
+                        isDisabledGenerateButton = false
+                    }, 5000)
+                }}>生成する</Button
+            >
             <Dialog.Close onclick={() => (isOpen = false)}
                 ><Button variant="secondary" class="w-full">キャンセル</Button
                 ></Dialog.Close
