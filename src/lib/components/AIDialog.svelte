@@ -92,7 +92,7 @@
                     isDisabledGenerateButton = true
                     setTimeout(() => {
                         isDisabledGenerateButton = false
-                    }, 5000)
+                    }, 10000)
                 }}>生成する</Button
             >
             <Dialog.Close onclick={() => (isOpen = false)}

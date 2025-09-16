@@ -24,9 +24,6 @@ export const generateDailyReport = async (
             promptsTemplate +
             '\n```issue' +
             todayFinishedIssues.title +
-            '```' +
-            '\n```issue body' +
-            todayFinishedIssues.body +
             '```',
     })
     return dailyReport.text
