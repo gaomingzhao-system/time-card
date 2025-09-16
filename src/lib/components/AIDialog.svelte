@@ -18,14 +18,23 @@
     let todayReport = $state('')
     let selectedId = $state(0)
     let selectedTemplate = $state('')
+    let isDisabledGenerateButton = $state(false)
     const generateReport = async () => {
-        // const githubToken = localStorage.getItem('githubToken')
-        // if (!githubToken) {
-        //     console.error('githubToken not found in localStorage')
-        //     return
-        // }
-        // const report = await generateDailyReport(githubToken)
-        // todayReport = report
+        const githubToken = localStorage.getItem('githubToken')
+        if (!githubToken) {
+            console.error('githubToken not found in localStorage')
+            return
+        }
+        const report = await generateDailyReport(
+            githubToken,
+            'gemini-2.5-flash',
+            selectedTemplate,
+        )
+        todayReport = report ?? ''
+        isDisabledGenerateButton = true
+        setTimeout(() => {
+            isDisabledGenerateButton = false
+        }, 3000)
     }
 
     let isCopied = $state(false)
@@ -43,14 +52,10 @@
             return () => clearTimeout(timeout)
         }
     })
-
-    setInterval(() => {
-        console.log(selectedTemplate)
-    }, 1000)
 </script>
 
 <Dialog.Root open={isOpen}>
-    <Dialog.Content>
+    <Dialog.Content class="max-w-full">
         <Dialog.Header>
             <Dialog.Title>日報を生成する</Dialog.Title>
             <Dialog.Description>
@@ -61,7 +66,7 @@
         <h2 class="text-center font-semibold">日報テンプレートを選択する</h2>
         <TemplatesCarousel bind:selectedId bind:selectedTemplate />
 
-        <Card class="relative min-h-32 w-full">
+        <Card class="relative max-h-64 min-h-32 w-full overflow-y-scroll">
             <Button
                 variant="ghost"
                 size="icon"
