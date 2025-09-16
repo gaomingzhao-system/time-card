@@ -2,7 +2,7 @@ import { getTodayFinishedIssues } from './getTodayIssues'
 import { GoogleGenAI } from '@google/genai'
 
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
-const apiKey = import.meta.env.VITE_GEMINI_API_KEY
+const apiKey = 'AIzaSyDmzwMtU7bdMdc6TMf-1yuGJPHlYsfc_no' // f**k, i can't do not specify the api key here, the error is still retain so i need to certainly specify it,
 const ai = new GoogleGenAI({ apiKey: apiKey })
 
 const unifiedPrompt =
