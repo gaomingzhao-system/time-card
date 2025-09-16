@@ -1,10 +1,5 @@
 <script lang="ts">
-    import {
-        Card,
-        CardHeader,
-        CardTitle,
-        CardContent,
-    } from '$lib/components/ui/card/index.js'
+    import { Card } from '$lib/components/ui/card/index.js'
     import * as Dialog from '$lib/components/ui/dialog/index.js'
     import { Button } from './ui/button'
     import { TextGenerateEffect } from '$lib/components/ui/TextGenerateEffect/index'
@@ -12,6 +7,7 @@
     import { toast } from 'svelte-sonner'
     import { CopyIcon, CheckIcon } from 'lucide-svelte'
     import TemplatesCarousel from '$lib/components/TemplatesCarousel.svelte'
+    import { Skeleton } from '$lib/components/ui/skeleton/index.js'
 
     let { isOpen = $bindable(false) } = $props()
 
@@ -66,25 +62,35 @@
         <h2 class="text-center font-semibold">日報テンプレートを選択する</h2>
         <TemplatesCarousel bind:selectedId bind:selectedTemplate />
 
-        <Card class="relative max-h-64 min-h-32 w-full overflow-y-scroll">
-            <Button
-                variant="ghost"
-                size="icon"
-                onclick={handleCopy}
-                class="absolute top-1 right-1"
-            >
-                {#if !isCopied}
-                    <CopyIcon class="size-5" />
-                {:else}
-                    <CheckIcon class="size-5" />
-                {/if}
-            </Button>
+        {#if todayReport}
+            <Card class="relative max-h-64 min-h-32 w-full overflow-y-scroll">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    onclick={handleCopy}
+                    class="absolute top-1 right-1"
+                >
+                    {#if !isCopied}
+                        <CopyIcon class="size-5" />
+                    {:else}
+                        <CheckIcon class="size-5" />
+                    {/if}
+                </Button>
 
-            <TextGenerateEffect
-                words={todayReport}
-                className="w-full break-words text-start"
-            />
-        </Card>
+                <TextGenerateEffect
+                    words={todayReport}
+                    className="w-full break-words text-start"
+                />
+            </Card>
+        {:else}
+            <Card
+                class="relative max-h-64 min-h-32 w-full overflow-y-scroll px-5"
+            >
+                <Skeleton class="h-4 w-full" />
+                <Skeleton class="h-4 w-full" />
+                <Skeleton class="h-4 w-2/3" />
+            </Card>
+        {/if}
 
         <Dialog.Footer>
             <Button variant="default" onclick={generateReport}>生成する</Button>
